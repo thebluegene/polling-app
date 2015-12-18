@@ -22,9 +22,7 @@
     "express-session": "^1.12.1",
     "mongojs": "^2.2.2",
     "mongoose": "^4.3.2",
-    "node": "0.0.0",
-    "npm": "^3.5.2",
-    "nvm": "0.0.3",
+    "npm": "^2.14.4",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "socket.io": "~0.9.14"
