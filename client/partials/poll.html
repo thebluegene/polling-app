@@ -1,0 +1,32 @@
+        <div class = 'individual-poll container'>
+        <a class = 'goback' ng-href='#/poll'><p>Back to polls</p></a>
+        <h2>{{quested.question}}</h2>
+            <div ng-if='!quested.polled'>
+                <div class = 'options' ng-repeat = 'option in quested.options'>
+                    <p><input type = 'radio' name= '{{quested.name}}' ng-model='quested.selected' value = '{{option}}'>&nbsp&nbsp {{option}}</p>
+                </div>
+                <div class = 'something-else' ng-hide='show(quest.username)'>
+                    <input class='form-control another-option' ng-model='newChoice' placeholder='Something else?'>
+                    <button class = 'btn btn-primary option' ng-click='anotherOption(quested, newChoice)'>+ Option</button>
+                </div>
+                <div ng-show ='show(quest.username)'>
+                    <h4>Sign in or register to add options to this poll.</h4>
+                </div>
+                <button class = 'btn btn-success btn-lg submit' ng-click='results(quested)'>Submit</button>
+            </div>
+            <div ng-if='quested.polled' class = 'chart'>
+                <canvas id="poll" width='300' height='300'></canvas>
+            </div>
+            <div class = 'share-buttons'>
+                <a ng-href= "http://twitter.com/share?url={{URL}}&text=This is the best poll:" target="_blank" class="share-btn twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a ng-href="http://reddit.com/submit?url={{URL}}&title=This poll changed my life" target="_blank" class="share-btn reddit">
+                    <i class="fa fa-reddit"></i>
+                </a>
+                <a href="http://www.facebook.com/sharer/sharer.php?u={{URL}}" target="_blank" class="share-btn facebook">
+                    <i class="fa fa-facebook"></i>
+                </a>
+            </div>
+        </div>
+        

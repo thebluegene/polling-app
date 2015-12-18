@@ -1,0 +1,15 @@
+
+        <div class='user-page' ng-init='userinfo()'>
+            <h2>{{loggeduser.username}}'s polls</h2>
+                <div ng-controller='AppController as appCtrl'>
+                    <div ng-repeat='quest in questions' ng-if = 'show(quest.username)' class = 'user-polls'>
+                        <div>
+                            <a ng-click='selected(quest)' ng-href = '#/selected/{{quest._id}}' ><h3>{{quest.question}}</h3></a>
+                            <button class = 'btn btn-danger remove' ng-click='remove(quest._id)'>Remove</button>
+                        </div>
+                    </div>
+                </div>
+            <div>
+                <a class="user-logout" ng-click="logout()">Log out </a>
+            </div>
+        </div>

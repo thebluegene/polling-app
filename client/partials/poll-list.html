@@ -1,0 +1,25 @@
+        <h2>Poll Up</h2>
+        <h4>A free, simple polling web application</h4>
+        <div class = 'poll-list-page'>
+        <div class = 'poll' ng-repeat = 'quest in questions.slice().reverse()'>
+                <div>
+                    <a ng-click='selected(quest)' ng-href = '#/selected/{{quest._id}}'><h3>{{quest.question}}</h3></a>
+                    <p>Created by {{quest.username}}</p>
+                </div>
+        </div>
+        <div class = 'add-poll'>
+        <div ng-hide='show(quest.username)'>
+                <div class = 'newQuestion' ng-controller = 'AddPoll as poll'>
+                    <input class='form-control' ng-model='newQ' placeholder="Enter Question">
+                    <div data-ng-repeat='choice in choices'>
+                        <input class='form-control' ng-model='choice.value' placeholder='Enter an option'>
+                    </div>
+                    <button class = 'btn btn-primary' ng-click='addOption()'>+ Option</button>
+                    <button class = "btn btn-primary" ng-click='addQuestion()'>Add Question</button>
+                </div> 
+        </div>
+        <div ng-show='show(quest.username)'>
+                <h4>Log-in or sign-up to post a question!</h4>
+        </div>
+        </div>
+        </div>
