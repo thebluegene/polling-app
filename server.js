@@ -27,7 +27,7 @@ var User = mongoose.model('User');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb://localhost/users');
+mongoose.connect('mongodb://heroku_q67rt94k:hfqflnv6fa95d7c7j3bg2lskn@ds033125.mongolab.com:33125/heroku_q67rt94k' || 'mongodb://localhost/users');
 app.use(express.static(__dirname+"/client"));
 app.use(bodyParser.json());
 app.use(session(
