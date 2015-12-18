@@ -7,7 +7,8 @@ var mongojs = require('mongojs');
 
 
 //To connect to mongo from heroku
-var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost";
+
+var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost/test";
 var MongoClient = require('mongodb').MongoClient;
 var db, questions;
 MongoClient.connect(MONGODB_URI, function (err, database) {
@@ -39,12 +40,12 @@ var User = mongoose.model('User');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect(process.env.MONGO_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/users');
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/users');
 app.use(express.static(__dirname+"/client"));
 app.use(bodyParser.json());
 app.use(session(
     {store: new MongoStore({
-        url: process.env.MONGO_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/test'
+        url: process.env.MONGO_URI || 'mongodb://localhost/test'
     }),
     secret:'mySecretKey',
     resave: true,
