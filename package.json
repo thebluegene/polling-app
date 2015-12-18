@@ -13,6 +13,7 @@
     "angular-route": "^1.4.8",
     "async": "~0.2.8",
     "body-parser": "^1.14.2",
+    "bower": "^1.7.1",
     "connect-mongo": "^1.0.1",
     "express": "~3.2.4",
     "express-session": "^1.12.1",
