@@ -123,7 +123,6 @@ function($scope, $http, $rootScope, $routeParams, $location){
     };
     
     $scope.show = function(user){
-        console.log(localStorage.getItem('username'));
         if(localStorage.getItem('username') == user){
             console.log('they match');
             return true;
