@@ -3,19 +3,18 @@ var express = require('express');
 var app = express();
 
 var mongojs = require('mongojs');
-//var db = mongojs('questions', ['questions']);
+var db = mongojs('questions', ['questions']);
 
 
 //To connect to mongo from heroku
-
-var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost/test";
+/*var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost/test";
 var MongoClient = require('mongodb').MongoClient;
 var db, questions;
 MongoClient.connect(MONGODB_URI, function (err, database) {
   if (err) throw err;
   db = database;
   questions = db.collection("questions");
-});
+});*/
 //
 
 var mongoose = require('mongoose');
