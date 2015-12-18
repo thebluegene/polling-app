@@ -32,7 +32,7 @@ app.use(express.static(__dirname+"/client"));
 app.use(bodyParser.json());
 app.use(session(
     {store: new MongoStore({
-        url: 'mongodb://localhost/test'
+        url: 'mongodb://heroku_q67rt94k:hfqflnv6fa95d7c7j3bg2lskn@ds033125.mongolab.com:33125/heroku_q67rt94k'
     }),
     secret:'mySecretKey',
     resave: true,
