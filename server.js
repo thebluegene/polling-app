@@ -7,7 +7,7 @@ var mongojs = require('mongojs');
 
 
 //To connect to mongo from heroku
-
+var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost";
 var MongoClient = require('mongodb').MongoClient;
 var db, questions;
 MongoClient.connect(process.env.MONGO_URI, function (err, database) {
