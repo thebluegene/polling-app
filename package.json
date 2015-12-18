@@ -20,6 +20,7 @@
     "connect-mongo": "^1.0.1",
     "express": "~3.2.4",
     "express-session": "^1.12.1",
+    "mongodb": "^2.0.52",
     "mongojs": "^2.2.2",
     "mongoose": "^4.3.2",
     "passport": "^0.3.2",
