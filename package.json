@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/thebluegene/polling-app.git"
   },
-  "author": "Gene",
+  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "angular": "^1.4.8",
     "angular-route": "^1.4.8",
