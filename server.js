@@ -27,12 +27,12 @@ var User = mongoose.model('User');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect(process.env.APP_URL || 'mongodb://localhost/users');
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/users');
 app.use(express.static(__dirname+"/client"));
 app.use(bodyParser.json());
 app.use(session(
     {store: new MongoStore({
-        url: process.env.APP_URL || 'mongodb://localhost/test'
+        url: process.env.MONGO_URI || 'mongodb://localhost/test'
     }),
     secret:'mySecretKey',
     resave: true,
