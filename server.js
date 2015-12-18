@@ -10,7 +10,7 @@ var mongojs = require('mongojs');
 var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost";
 var MongoClient = require('mongodb').MongoClient;
 var db, questions;
-MongoClient.connect(process.env.MONGO_URI, function (err, database) {
+MongoClient.connect(MONGODB_URI, function (err, database) {
   if (err) throw err;
   db = database;
   questions = db.collection("questions");
