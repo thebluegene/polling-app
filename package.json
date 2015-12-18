@@ -10,13 +10,22 @@
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "async": "~0.2.8",
+    "body-parser": "^1.14.2",
+    "connect-mongo": "^1.0.1",
     "express": "~3.2.4",
+    "express-session": "^1.12.1",
+    "mongojs": "^2.2.2",
+    "mongoose": "^4.3.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "socket.io": "~0.9.14"
   },
   "scripts": {
     "start": "node server.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mongojs": "^2.2.2"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/thebluegene/polling-app/issues"
