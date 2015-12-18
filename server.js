@@ -3,7 +3,16 @@ var express = require('express');
 var app = express();
 
 var mongojs = require('mongojs');
-var db = mongojs('questions', ['questions']);
+//var db = mongojs('questions', ['questions']);
+
+//To connect to mongo from heroku
+var db, questions;
+mongojs.MongoClient.connect(process.env.MONGO_URI, function (err, database) {
+  if (err) throw err;
+  db = database;
+  questions = db.collection("questions");
+});
+//
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
