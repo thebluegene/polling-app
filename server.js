@@ -149,6 +149,7 @@ app.get('/logout', function(req, res){
        q.options = req.body.options;
        q.count = req.body.count;
        q.username = req.body.username;
+       res.json(q);
        //questions.insert(req.body, function(err,doc){
     //       if(err) throw err;
      //      res.json(doc);
