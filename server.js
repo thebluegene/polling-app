@@ -93,7 +93,6 @@ function isAuthenticated(req,res,next){
 
 //LOG IN AND SIGN UP ROUTES
 app.post('/login', passport.authenticate('local'), function(req, res){
-    console.log(req.user);
     res.json(req.user);
 });
 
@@ -102,7 +101,7 @@ app.get('/currentuser',isAuthenticated,function(req,res){
 });
 app.post('/signup',function(req,res){
  
-var u =  new User();
+    var u =  new User();
     u.username = req.body.username;
     u.password = req.body.password;
     u.save(function(err){
@@ -123,58 +122,66 @@ app.get('/logout', function(req, res){
 
 
 mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
-if (err) throw err;
-//QUESTIONS PART OF SERVER
-app.get('/questions', function(req, res){
-    console.log('I recieved a GET request');
-    db.questions.find(function(err, docs){
+    if (err) throw err;
+    //QUESTIONS PART OF SERVERs
+
+    var questions = db.questions('questions');
+    var data = {question:'Is this working?', options:['yes','no'], count:[0,0], username:'admin'};
+    
+    questions.insert(data, {w:1}, function(err,doc){
         if(err) throw err;
-        console.log(docs);
-        res.json(docs);
+        console.log('hello?');
+    });
+    ;    app.get('/questions', function(req, res){
+        console.log('I recieved a GET request');
+        questions.find(function(err, docs){
+            if(err) throw err;
+            console.log(docs);
+            res.json(docs);
+        });
+        
     });
     
-});
-
-app.post('/questions', isAuthenticated, function(req, res){
-   console.log(req.body); 
-   db.questions.insert(req.body, function(err,doc){
-       if(err) throw err;
-       res.json(doc);
-   });
-});
-
-app.delete('/questions/:id', isAuthenticated, function(req,res){
-    var id = req.params.id;
-    //console.log(id);
-    db.questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
-       if(err) throw err; 
-       res.json(doc);
+    app.post('/questions', isAuthenticated, function(req, res){
+       console.log(req.body); 
+       questions.insert(req.body, function(err,doc){
+           if(err) throw err;
+           res.json(doc);
+       });
     });
-});
-
-app.put('/questions/:id', function(req,res){
-    var id=req.params.id;
-    if(req.body.newChoice && req.body.count){
-        db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
-            update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
-            new: true}, function(err,doc){
-                if(err) throw err;
-                res.json(doc);
-            }
-        );
-    }
-    else{
-        console.log('count being saved');
-        db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
-            update:{$set:{count: req.body}},
-            new: true}, function(err,doc){
-                if(err) throw err;
-                res.json(doc);
+    
+    app.delete('/questions/:id', isAuthenticated, function(req,res){
+        var id = req.params.id;
+        //console.log(id);
+        questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
+           if(err) throw err; 
+           res.json(doc);
         });
-    }
-});
-var port = process.env.PORT || 8080;
-app.listen(port, function () {
-    console.log('Listening on port '+port+'...');
-});
+    });
+    
+    app.put('/questions/:id', function(req,res){
+        var id=req.params.id;
+        if(req.body.newChoice && req.body.count){
+            questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+                update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
+                new: true}, function(err,doc){
+                    if(err) throw err;
+                    res.json(doc);
+                }
+            );
+        }
+        else{
+            console.log('count being saved');
+            questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+                update:{$set:{count: req.body}},
+                new: true}, function(err,doc){
+                    if(err) throw err;
+                    res.json(doc);
+            });
+        }
+    });
+    var port = process.env.PORT || 8080;
+    app.listen(port, function () {
+        console.log('Listening on port '+port+'...');
+    });
 });
