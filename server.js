@@ -193,7 +193,8 @@ app.get('/logout', function(req, res){
             //        res.json(doc);
             //});
             questions.findOne({_id: id}, function(err, question){
-                question.count = req.body.count;
+                //question.count = req.body.count;
+                question.count = [1,2];
                 question.save(function(err){
                     if(err) throw err;
                 });
