@@ -168,13 +168,17 @@ app.get('/logout', function(req, res){
     app.put('/questions/:id', function(req,res){
         var id=req.params.id;
         if(req.body.newChoice && req.body.count){
-            questions.findByIdAndUpdate({query:{_id: mongojs.ObjectId(id)},
-                update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
-                new: true}, function(err,doc){
-                    if(err) throw err;
-                    res.json(doc);
-                }
-            );
+            //questions.findByIdAndUpdate({query:{_id: mongojs.ObjectId(id)},
+            //    update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
+            //    new: true}, function(err,doc){
+            //        if(err) throw err;
+            //        res.json(doc);
+            //    }
+            //);
+            questions.update({_id: id},{
+                options: req.body.options.push(req.body.newChoice),
+                count: req.body.count
+            });
         }
         else{
             console.log('count being saved');
