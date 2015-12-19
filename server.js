@@ -34,12 +34,23 @@ var UserSchema = new Schema({
         trim: true
     }
 });
+var QSchema = new Schema({
+    question: String,
+    options: Array,
+    count: Array,
+    username: String
+});
 mongoose.model('User', UserSchema);
+mongoose.model('questions', QSchema)
+
 var User = mongoose.model('User');
+var questions = mongoose.model('questions');
+
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/users');
+
 app.use(express.static(__dirname+"/client"));
 app.use(bodyParser.json());
 app.use(session(
@@ -120,13 +131,10 @@ app.get('/logout', function(req, res){
 });
 
 
-
-mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
-    if (err) throw err;
     //QUESTIONS PART OF SERVERs
 ;    app.get('/questions', function(req, res){
         console.log('I recieved a GET request');
-        db.questions.find(function(err, docs){
+        questions.find(function(err, docs){
             if(err) throw err;
             console.log(docs);
             res.json(docs);
@@ -136,7 +144,7 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
     
     app.post('/questions', isAuthenticated, function(req, res){
        console.log(req.body); 
-       db.questions.insert(req.body, function(err,doc){
+       questions.insert(req.body, function(err,doc){
            if(err) throw err;
            res.json(doc);
        });
@@ -145,7 +153,7 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
     app.delete('/questions/:id', isAuthenticated, function(req,res){
         var id = req.params.id;
         //console.log(id);
-        db.questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
+        questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
            if(err) throw err; 
            res.json(doc);
         });
@@ -154,7 +162,7 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
     app.put('/questions/:id', function(req,res){
         var id=req.params.id;
         if(req.body.newChoice && req.body.count){
-            db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+            questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
                 update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
                 new: true}, function(err,doc){
                     if(err) throw err;
@@ -164,7 +172,7 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
         }
         else{
             console.log('count being saved');
-            db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+            questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
                 update:{$set:{count: req.body}},
                 new: true}, function(err,doc){
                     if(err) throw err;
@@ -176,4 +184,3 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
     app.listen(port, function () {
         console.log('Listening on port '+port+'...');
     });
-});
