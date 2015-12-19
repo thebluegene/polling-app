@@ -125,10 +125,9 @@ app.get('/logout', function(req, res){
 mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
 if (err) throw err;
 //QUESTIONS PART OF SERVER
-var questions = db.collection('questions');
 app.get('/questions', function(req, res){
     console.log('I recieved a GET request');
-    questions.find(function(err, docs){
+    db.questions.find(function(err, docs){
         if(err) throw err;
         console.log(docs);
         res.json(docs);
@@ -138,7 +137,7 @@ app.get('/questions', function(req, res){
 
 app.post('/questions', isAuthenticated, function(req, res){
    console.log(req.body); 
-   questions.insert(req.body, function(err,doc){
+   db.questions.insert(req.body, function(err,doc){
        if(err) throw err;
        res.json(doc);
    });
@@ -147,7 +146,7 @@ app.post('/questions', isAuthenticated, function(req, res){
 app.delete('/questions/:id', isAuthenticated, function(req,res){
     var id = req.params.id;
     //console.log(id);
-    questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
+    db.questions.remove({_id: mongojs.ObjectId(id)}, function(err,doc){
        if(err) throw err; 
        res.json(doc);
     });
@@ -156,7 +155,7 @@ app.delete('/questions/:id', isAuthenticated, function(req,res){
 app.put('/questions/:id', function(req,res){
     var id=req.params.id;
     if(req.body.newChoice && req.body.count){
-        questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+        db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
             update:{$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
             new: true}, function(err,doc){
                 if(err) throw err;
@@ -166,7 +165,7 @@ app.put('/questions/:id', function(req,res){
     }
     else{
         console.log('count being saved');
-        questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
+        db.questions.findAndModify({query:{_id: mongojs.ObjectId(id)},
             update:{$set:{count: req.body}},
             new: true}, function(err,doc){
                 if(err) throw err;
