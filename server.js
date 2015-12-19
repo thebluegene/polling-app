@@ -175,9 +175,14 @@ app.get('/logout', function(req, res){
             //        res.json(doc);
             //    }
             //);
-            questions.update({_id: id},{
-                options: req.body.options.push(req.body.newChoice),
-                count: req.body.count
+            questions.findOne({_id: id}, function(err, question){
+                question.options = req.body.options.push(req.body.newChoice);
+                question.count = req.body.count;
+                
+                question.save(function(err){
+                    if(err) throw err;
+                    res.json(question);
+                });
             });
         }
         else{
