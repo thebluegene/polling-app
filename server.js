@@ -144,10 +144,15 @@ app.get('/logout', function(req, res){
     
     app.post('/questions', isAuthenticated, function(req, res){
        console.log(req.body); 
-       questions.insert(req.body, function(err,doc){
-           if(err) throw err;
-           res.json(doc);
-       });
+       var q = new questions();
+       q.question = req.body.question;
+       q.options = req.body.options;
+       q.count = req.body.count;
+       q.username = req.body.username;
+       //questions.insert(req.body, function(err,doc){
+    //       if(err) throw err;
+     //      res.json(doc);
+      // });
     });
     
     app.delete('/questions/:id', isAuthenticated, function(req,res){
