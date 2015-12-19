@@ -3,8 +3,8 @@ var express = require('express');
 var app = express();
 
 var mongojs = require('mongojs');
-var db = mongojs('questions', ['questions']);
-
+//var db = mongojs('questions', ['questions']);
+var mongo = require('mongodb').MongoClient;
 
 //To connect to mongo from heroku
 /*var MONGODB_URI = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost/test";
@@ -83,7 +83,6 @@ passport.deserializeUser(function(id, done) {
     });
 });
  
- 
 //CHECK IF AUTHENTICATED
 function isAuthenticated(req,res,next){
     if(req.isAuthenticated()){
@@ -123,7 +122,8 @@ app.get('/logout', function(req, res){
 
 
 
-
+mongo.connect(process.env.MONGO_URI, function (err, db) {
+if (err) throw err;
 //QUESTIONS PART OF SERVER
 app.get('/questions', function(req, res){
     console.log('I recieved a GET request');
@@ -176,4 +176,5 @@ app.put('/questions/:id', function(req,res){
 var port = process.env.PORT || 8080;
 app.listen(port, function () {
     console.log('Listening on port '+port+'...');
+});
 });
