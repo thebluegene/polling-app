@@ -192,13 +192,9 @@ app.get('/logout', function(req, res){
             //        if(err) throw err;
             //        res.json(doc);
             //});
-            questions.findOne({_id: id}, function(err, question){
-                //question.count = req.body.count;
-                question.count = [1,2];
-                question.save(function(err){
-                    if(err) throw err;
-                });
-            });
+            questions.update({_id: id}, {$set:{count:req.body.count}},
+                function(err){if(err) throw err;}
+            );
         }
     });
     var port = process.env.PORT || 8080;
