@@ -100,7 +100,7 @@ function($scope, $http, $rootScope, $routeParams, $location){
     });
     $scope.parentmethod = function(){
         $http.get('/questions').success(function(response){
-            console.log('I got the data I requested');
+            console.log('I got the data I requested: ' + response);
             $scope.questions = response;
             $scope.quest = '';
             
