@@ -186,12 +186,19 @@ app.get('/logout', function(req, res){
             });
         }
         else{
-            console.log('count being saved');
-            questions.findByIdAndUpdate({query:{_id: mongojs.ObjectId(id)},
-                update:{$set:{count: req.body}},
-                new: true}, function(err,doc){
+            //console.log('count being saved');
+            //questions.findByIdAndUpdate({query:{_id: mongojs.ObjectId(id)},
+            //    update:{$set:{count: req.body}},
+            //    new: true}, function(err,doc){
+            //        if(err) throw err;
+            //        res.json(doc);
+            //});
+            questions.findOne({_id: id}, function(err, question){
+                question.count = req.body.count;
+                question.save(function(err){
                     if(err) throw err;
-                    res.json(doc);
+                    res.json(question);
+                });
             });
         }
     });
