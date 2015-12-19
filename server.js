@@ -192,7 +192,7 @@ app.get('/logout', function(req, res){
             //        if(err) throw err;
             //        res.json(doc);
             //});
-            questions.update({_id: id}, {$set:{count:req.body.count}},
+            questions.update({_id: id}, {$set:{count:req.body}},
                 function(err){if(err) throw err;}
             );
         }
