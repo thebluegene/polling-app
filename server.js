@@ -126,12 +126,6 @@ mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
     //QUESTIONS PART OF SERVERs
 
     var questions = db.questions('questions');
-    var data = {question:'Is this working?', options:['yes','no'], count:[0,0], username:'admin'};
-    
-    questions.insert(data, {w:1}, function(err,doc){
-        if(err) throw err;
-        console.log('hello?');
-    });
     ;    app.get('/questions', function(req, res){
         console.log('I recieved a GET request');
         questions.find(function(err, docs){
