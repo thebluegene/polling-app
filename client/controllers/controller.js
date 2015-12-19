@@ -218,7 +218,7 @@ function($scope,$http, $rootScope){
                 counter.push($scope.choices[thing].count);
             }
             var data = {question:$scope.newQ, options:values, count: counter, username: localStorage.getItem('username')};
-            console.log('data: '+ data);
+            console.log('data: '+ data.question);
             $http.post('/questions', data).success(function(response){
                 console.log('response: '+ response);
             });
