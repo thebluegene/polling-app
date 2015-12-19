@@ -181,7 +181,6 @@ app.get('/logout', function(req, res){
                 
                 question.save(function(err){
                     if(err) throw err;
-                    res.json(question);
                 });
             });
         }
@@ -197,7 +196,6 @@ app.get('/logout', function(req, res){
                 question.count = req.body.count;
                 question.save(function(err){
                     if(err) throw err;
-                    res.json(question);
                 });
             });
         }
