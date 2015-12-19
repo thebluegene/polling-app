@@ -73,11 +73,9 @@ passport.use(new LocalStrategy(
                 throw err;
             }
             if(!user){
-                console.log('whats up');
                 return done(null, false, {alert:'Incorrect username.'});
             }
             if(user.password != password){
-                console.log('que paso');
                 return done(null, false, {alert: 'Incorrect password.'});
             }
             return done(null, user);
@@ -143,13 +141,15 @@ app.get('/logout', function(req, res){
     });
     
     app.post('/questions', isAuthenticated, function(req, res){
-       console.log(req.body); 
        var q = new questions();
        q.question = req.body.question;
        q.options = req.body.options;
        q.count = req.body.count;
        q.username = req.body.username;
-       res.json(q);
+       q.save(function(err){
+           if(err) throw err;
+           res.json(q);
+       });
        //questions.insert(req.body, function(err,doc){
     //       if(err) throw err;
      //      res.json(doc);
