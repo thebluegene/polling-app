@@ -175,23 +175,11 @@ app.get('/logout', function(req, res){
             //        res.json(doc);
             //    }
             //);
-            questions.findOne({_id: id}, function(err, question){
-                question.options = req.body.options.push(req.body.newChoice);
-                question.count = req.body.count;
-                
-                question.save(function(err){
-                    if(err) throw err;
-                });
-            });
+            questions.update({_id: id}, {$addToSet:{options: req.body.newChoice}, $set:{count: req.body.count}},
+                function(err){if(err) throw err;}
+            );
         }
         else{
-            //console.log('count being saved');
-            //questions.findByIdAndUpdate({query:{_id: mongojs.ObjectId(id)},
-            //    update:{$set:{count: req.body}},
-            //    new: true}, function(err,doc){
-            //        if(err) throw err;
-            //        res.json(doc);
-            //});
             questions.update({_id: id}, {$set:{count:req.body}},
                 function(err){if(err) throw err;}
             );
