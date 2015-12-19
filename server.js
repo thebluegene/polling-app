@@ -122,7 +122,7 @@ app.get('/logout', function(req, res){
 
 
 
-mongo.connect(process.env.MONGO_URI, function (err, db) {
+mongo.connect(process.env.MONGOLAB_URI, function (err, db) {
 if (err) throw err;
 //QUESTIONS PART OF SERVER
 app.get('/questions', function(req, res){
